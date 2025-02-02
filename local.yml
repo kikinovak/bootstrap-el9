@@ -21,6 +21,17 @@
           - ansible_distribution_major_version is version('9', '=')
         fail_msg: "Please run this playbook on Rocky Linux 9.x only."
 
+    - name: Configure Ansible
+      ansible.builtin.copy:
+        dest: /root/.ansible.cfg
+        owner: root
+        group: root
+        mode: 0644
+        content: |
+          [defaults]
+          vault_password_file = /etc/ansible/vault_pass
+          nocows = true
+
     - name: Install python3-passlib needed for password encryption
       ansible.builtin.dnf:
         name: python3-passlib
